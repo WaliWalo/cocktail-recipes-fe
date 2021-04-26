@@ -57,6 +57,8 @@
     ]
   },
   "devDependencies": {
+    "@iconify-icons/mdi": "^1.1.14",
+    "@iconify/react": "^1.1.4",
     "@storybook/addon-actions": "^6.2.8",
     "@storybook/addon-docs": "^6.2.8",
     "@storybook/addon-essentials": "^6.2.8",

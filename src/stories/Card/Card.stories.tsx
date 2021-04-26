@@ -1,8 +1,10 @@
 import React from "react";
-import "./App.css";
-import Overlay from "./components/Overlay/Overlay";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Card from "./components/Card/Card";
+import Card from "../../components/Card/Card";
+export default {
+  title: "Card",
+  component: Card,
+};
+
 const data = {
   idDrink: "17204",
   strDrink: "Long Island Iced Tea",
@@ -60,13 +62,7 @@ const data = {
   strCreativeCommonsConfirmed: "No",
   dateModified: "2017-09-02 17:41:50",
 };
-function App() {
-  return (
-    <div className="App">
-      <Overlay type="landing" />
-      <Card drink={data} />
-    </div>
-  );
-}
 
-export default App;
+export function Cards() {
+  return <Card drink={data} />;
+}
