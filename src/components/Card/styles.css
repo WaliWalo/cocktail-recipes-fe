@@ -65,7 +65,7 @@
 }
 
 .cocktailName {
-  font-size: 2em;
+  font-size: 8vw;
   word-wrap: break-word;
   font-family: "Pacifico", cursive;
   text-align: center;
@@ -78,14 +78,65 @@
   font-size: 1.2em;
   font-family: "Righteous", cursive;
   word-wrap: break-word;
-  height: 65%;
+  height: 52%;
   width: 100%;
   overflow-y: auto;
 }
 
-.ingredients {
-}
-
 .measures {
   margin-left: 1em;
+}
+
+.instructions {
+  padding: 0 1em 0 1em;
+  font-size: 1em;
+}
+
+.instructionBtn {
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+.instructionBtn > button {
+  font-family: "Righteous", cursive;
+  background-image: linear-gradient(
+    to right top,
+    #ff0000,
+    #ff0046,
+    #ff0081,
+    #ff00c0,
+    #e900ff
+  );
+  border-radius: 0.5em;
+  background-color: white;
+  color: black;
+}
+
+@media screen and (min-width: 480px) {
+  .cardContainer {
+    display: flex;
+  }
+  #mainDescriptionContainer {
+    height: 58%;
+    padding-top: 2em;
+  }
+  #cardImageContainer {
+    height: 100%;
+    border-radius: 1em 0 0 1em;
+  }
+  #cardImageContainer > img {
+    border-radius: 1em 0 0 1em;
+  }
+  .cocktailName {
+    font-size: 3vw;
+  }
+  .ingredientsContainer {
+    font-size: 2vw;
+  }
+  .instructions {
+    padding: 1em;
+    font-family: "Righteous", cursive;
+    text-align: justify;
+    font-size: 2vw;
+  }
 }
