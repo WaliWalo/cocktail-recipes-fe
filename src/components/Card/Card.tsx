@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
-import { ICardProps, IIngredient } from "./Types";
-import { Icon } from "@iconify/react";
-import glassCocktail from "@iconify-icons/mdi/glass-cocktail";
-import { Button } from "react-bootstrap";
+import { ICardProps } from "./Types";
 import gsap from "gsap/all";
 import { TextPlugin } from "gsap/TextPlugin";
+import { Heart, HeartFill } from "react-bootstrap-icons";
 
 function Card(props: ICardProps) {
   const [ingredients, setIngredients] = useState<Array<string>>([]);
@@ -79,7 +77,9 @@ function Card(props: ICardProps) {
     <>
       <div className="cardContainer ">
         <div id="topRightIconContainer">
-          <Icon icon={glassCocktail} />
+          {/* <Icon icon={glassCocktail} /> */}
+          {/* <Heart /> */}
+          <HeartFill />
         </div>
         <div id="cardImageContainer">
           <img

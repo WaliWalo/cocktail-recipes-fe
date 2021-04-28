@@ -17,7 +17,8 @@
     #00a6b3,
     #3db4ad
   );
-  box-shadow: 10px 10px 5px grey;
+  box-shadow: 5px 5px 5px grey;
+  border: 1px solid white;
   border-radius: 1em;
   position: relative;
 }
@@ -26,11 +27,11 @@
   position: absolute;
   height: 2em;
   width: 2em;
-  border-radius: 100%;
-  background-color: white;
+  /* border-radius: 100%;
+  background-color: white; */
   right: 0;
   margin: 0.5em 0.5em 0 0;
-  box-shadow: 1px 0px white, -1px 0px white, 0px 1px white, 0px -1px white;
+  /* box-shadow: 1px 0px white, -1px 0px white, 0px 1px white, 0px -1px white; */
 }
 
 #topRightIconContainer > svg {
@@ -81,6 +82,8 @@
   height: 52%;
   width: 100%;
   overflow-y: auto;
+  text-align: -webkit-center;
+  /* margin-top: 1em; */
 }
 
 .measures {
@@ -90,11 +93,13 @@
 .instructions {
   padding: 0 1em 0 1em;
   font-size: 1em;
+  overflow-y: auto;
+  height: 100%;
 }
 
 .instructionBtn {
   text-align: center;
-  margin-top: 0.5em;
+  margin-top: 1em;
 }
 
 .instructionBtn > button {
@@ -115,6 +120,8 @@
 @media screen and (min-width: 480px) {
   .cardContainer {
     display: flex;
+    height: 70vh;
+    width: 60vw;
   }
   #mainDescriptionContainer {
     height: 58%;

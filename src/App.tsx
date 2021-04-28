@@ -1,8 +1,11 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Overlay from "./components/Overlay/Overlay";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "./components/Card/Card";
+import SearchBar from "./components/SearchBar/SearchBar";
+import Glasses from "./components/Glasses/Glasses";
+import { Container, Row } from "react-bootstrap";
 const data = {
   idDrink: "17204",
   strDrink: "Long Island Iced Tea",
@@ -63,8 +66,18 @@ const data = {
 function App() {
   return (
     <div className="App">
-      <Overlay type="landing" />
-      <Card drink={data} />
+      {/* <Overlay type="landing" /> */}
+      <Container className="appContainer">
+        <Row>
+          <SearchBar />
+        </Row>
+        <Row>
+          <Glasses />
+        </Row>
+        <Row>
+          <Card drink={data} />
+        </Row>
+      </Container>
     </div>
   );
 }
