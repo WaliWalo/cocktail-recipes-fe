@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Overlay from "./components/Overlay/Overlay";
@@ -6,6 +6,8 @@ import Card from "./components/Card/Card";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Glasses from "./components/Glasses/Glasses";
 import { Container, Row } from "react-bootstrap";
+import { useAppDispatch } from "./store/setup/store";
+import { getRandomRecipesAsync } from "./store/recipe/recipeSlice";
 const data = {
   idDrink: "17204",
   strDrink: "Long Island Iced Tea",
@@ -64,6 +66,12 @@ const data = {
   dateModified: "2017-09-02 17:41:50",
 };
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getRandomRecipesAsync());
+  });
+
   return (
     <div className="App">
       {/* <Overlay type="landing" /> */}

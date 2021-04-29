@@ -92,11 +92,15 @@ function Card(props: ICardProps) {
           <div className="ingredientsContainer">
             <div className="ingredients">
               {ingredients.length !== 0 &&
-                ingredients.map((ingredient) => <div>{ingredient}</div>)}
+                ingredients.map((ingredient, index) => (
+                  <div key={`${ingredient}(${index})`}>{ingredient}</div>
+                ))}
             </div>
             <div className="measures">
               {measures.length !== 0 &&
-                measures.map((measure) => <div>{measure}</div>)}
+                measures.map((measure, index) => (
+                  <div key={`${measure}(${index})`}>{measure}</div>
+                ))}
             </div>
             <div className="instructions"></div>
           </div>
