@@ -51,3 +51,8 @@ export interface IRecipe {
   strCreativeCommonsConfirmed: string;
   dateModified: string;
 }
+
+export interface IQuery {
+  query: string;
+  type: string;
+}

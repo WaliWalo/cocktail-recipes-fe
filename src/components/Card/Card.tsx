@@ -4,6 +4,7 @@ import { ICardProps } from "./Types";
 import gsap from "gsap/all";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Heart, HeartFill } from "react-bootstrap-icons";
+import { Draggable } from "gsap/Draggable";
 
 function Card(props: ICardProps) {
   const [ingredients, setIngredients] = useState<Array<string>>([]);
@@ -12,9 +13,25 @@ function Card(props: ICardProps) {
   const [toggle, setToggle] = useState(false);
 
   gsap.registerPlugin(TextPlugin);
+  gsap.registerPlugin(Draggable);
 
   useEffect(() => {
     getIngredients();
+    const dragInstance = Draggable.create(`#card${props.drink.idDrink}`, {
+      onDragEnd: () => {
+        const direction = dragInstance[0].getDirection("start");
+        if (direction === "right" || direction.slice(0, 5) === "right") {
+          gsap.to(`#card${props.drink.idDrink}`, { x: "100vw" });
+        } else if (direction === "left" || direction.slice(0, 4) === "left") {
+          gsap.to(`#card${props.drink.idDrink}`, { x: "-100vw" });
+        } else if (direction === "up") {
+          gsap.to(`#card${props.drink.idDrink}`, { y: "-100vh" });
+        } else if (direction === "down") {
+          gsap.to(`#card${props.drink.idDrink}`, { y: "100vh" });
+        }
+        gsap.to(`#card${props.drink.idDrink}`, { x: "0", y: "0", delay: 1 });
+      },
+    });
   }, []);
 
   const getIngredients = () => {
@@ -75,7 +92,7 @@ function Card(props: ICardProps) {
 
   return (
     <>
-      <div className="cardContainer ">
+      <div className="cardContainer" id={`card${props.drink.idDrink}`}>
         <div id="topRightIconContainer">
           {/* <Icon icon={glassCocktail} /> */}
           {/* <Heart /> */}

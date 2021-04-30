@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IRecipe } from "./types";
+import { IQuery, IRecipe } from "./types";
 import { AppDispatch } from "../setup/store";
+import { RootStateOrAny } from "react-redux";
 
 type SliceState =
   | { status: "loading" }
@@ -13,26 +14,49 @@ const recipeSlice = createSlice({
   name: "recipes",
   initialState: initialState,
   reducers: {
-    setRandomRecipes: (state, action: PayloadAction<Array<IRecipe>>) =>
+    setRecipes: (state, action: PayloadAction<Array<IRecipe>>) =>
       (state = { status: "finished", data: action.payload }),
-    getSearchedRecipes: (state, action: PayloadAction<string>) => state,
-    getFilteredRecipes: (state, action: PayloadAction<string>) => state,
+    setSearchedRecipes: (state, action: PayloadAction<string>) => state,
+    setFilteredRecipes: (state, action: PayloadAction<string>) => state,
     setError: (state, action: PayloadAction<object>) =>
       (state = { status: "error", error: action.payload }),
   },
 });
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
+// The function below is called a thunk and allows us to perform async logic.
 export const getRandomRecipesAsync = () => async (dispatch: AppDispatch) => {
   try {
     const response = await fetch(
       `${process.env.REACT_APP_BE_URL}/api/cocktails`
     );
     if (response.ok) {
-      dispatch(setRandomRecipes(await response.json()));
+      dispatch(setRecipes(await response.json()));
+    } else {
+      const error = { status: response.status, message: response.statusText };
+      dispatch(setError(error));
+    }
+  } catch (error) {
+    const err = { status: 500, message: "Please try again later" };
+    dispatch(setError(err));
+  }
+};
+
+export const getSearchedRecipesAsync = (query: IQuery) => async (
+  dispatch: AppDispatch
+) => {
+  try {
+    let url = "";
+    if (query.type === "cocktail") {
+      url = `${process.env.REACT_APP_BE_URL}/api/cocktails/search/${query.query}`;
+    } else if (query.type === "ingredient") {
+      url = `${process.env.REACT_APP_BE_URL}/api/cocktails/filter?i=${query.query}`;
+    } else {
+      url = `${process.env.REACT_APP_BE_URL}/api/cocktails/filter?g=${query.query}`;
+    }
+    const response = await fetch(url);
+    if (response.ok) {
+      // const data = await response.json();
+      dispatch(setRecipes(await response.json()));
     } else {
       const error = { status: response.status, message: response.statusText };
       dispatch(setError(error));
@@ -47,10 +71,13 @@ export const getRandomRecipesAsync = () => async (dispatch: AppDispatch) => {
 const { actions, reducer } = recipeSlice;
 // Extract and export each action creator by name
 export const {
-  setRandomRecipes,
-  getSearchedRecipes,
-  getFilteredRecipes,
+  setRecipes,
+  setSearchedRecipes,
+  setFilteredRecipes,
   setError,
 } = actions;
+
+export const selectDrinks = (state: RootStateOrAny) => state.recipe.data;
+
 // Export the reducer, either as a default or named export
 export default reducer;

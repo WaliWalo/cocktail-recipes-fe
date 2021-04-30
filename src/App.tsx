@@ -6,8 +6,12 @@ import Card from "./components/Card/Card";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Glasses from "./components/Glasses/Glasses";
 import { Container, Row } from "react-bootstrap";
-import { useAppDispatch } from "./store/setup/store";
-import { getRandomRecipesAsync } from "./store/recipe/recipeSlice";
+import { useAppDispatch, useAppSelector } from "./store/setup/store";
+import {
+  getRandomRecipesAsync,
+  getSearchedRecipesAsync,
+} from "./store/recipe/recipeSlice";
+import { IDrink } from "./components/Card/Types";
 const data = {
   idDrink: "17204",
   strDrink: "Long Island Iced Tea",
@@ -67,10 +71,13 @@ const data = {
 };
 function App() {
   const dispatch = useAppDispatch();
+  const drinks = useAppSelector((state) => state.recipe.data);
 
   useEffect(() => {
+    const query = { type: "glass", query: "cocktail_glass" };
     dispatch(getRandomRecipesAsync());
-  });
+    // dispatch(getSearchedRecipesAsync(query));
+  }, []);
 
   return (
     <div className="App">
@@ -83,7 +90,8 @@ function App() {
           <Glasses />
         </Row>
         <Row>
-          <Card drink={data} />
+          {drinks !== undefined &&
+            drinks.map((drink: IDrink) => <Card drink={drink} />)}
         </Row>
       </Container>
     </div>
