@@ -1,5 +1,6 @@
 export interface ICardProps {
   drink: IDrink;
+  index: number;
 }
 
 export interface IDrink {

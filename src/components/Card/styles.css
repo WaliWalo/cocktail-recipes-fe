@@ -21,6 +21,7 @@
   border: 1px solid white;
   border-radius: 1em;
   position: absolute;
+  z-index: 1000;
 }
 
 #topRightIconContainer {
@@ -63,6 +64,8 @@
   width: 100%;
   border-radius: 0 0 1em 1em;
   color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .cocktailName {
@@ -122,9 +125,10 @@
     display: flex;
     height: 70vh;
     width: 60vw;
+    z-index: 1000;
   }
   #mainDescriptionContainer {
-    height: 58%;
+    height: 100%;
     padding-top: 2em;
   }
   #cardImageContainer {

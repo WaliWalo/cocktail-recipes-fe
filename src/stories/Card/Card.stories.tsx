@@ -64,5 +64,5 @@ const data = {
 };
 
 export function Cards() {
-  return <Card drink={data} />;
+  return <Card drink={data} index={1} />;
 }

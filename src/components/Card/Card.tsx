@@ -5,20 +5,29 @@ import gsap from "gsap/all";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { Draggable } from "gsap/Draggable";
+import { useAppSelector } from "./../../store/setup/store";
 
 function Card(props: ICardProps) {
   const [ingredients, setIngredients] = useState<Array<string>>([]);
   const [measures, setMeasures] = useState<Array<string>>([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [toggle, setToggle] = useState(false);
+  const [zIndex, setZIndex] = useState(props.index);
+  const drinks = useAppSelector((state) => state.recipe.data);
 
   gsap.registerPlugin(TextPlugin);
   gsap.registerPlugin(Draggable);
 
   useEffect(() => {
+    gsap.to(`#card${props.drink.idDrink}`, { rotate: props.index - 1000 });
+  });
+
+  useEffect(() => {
     getIngredients();
     const dragInstance = Draggable.create(`#card${props.drink.idDrink}`, {
       onDragEnd: () => {
+        const newIndex = zIndex - drinks.length;
+        setZIndex(newIndex);
         const direction = dragInstance[0].getDirection("start");
         if (direction === "right" || direction.slice(0, 5) === "right") {
           gsap.to(`#card${props.drink.idDrink}`, { x: "100vw" });
@@ -29,10 +38,18 @@ function Card(props: ICardProps) {
         } else if (direction === "down") {
           gsap.to(`#card${props.drink.idDrink}`, { y: "100vh" });
         }
-        gsap.to(`#card${props.drink.idDrink}`, { x: "0", y: "0", delay: 1 });
+        gsap.to(`#card${props.drink.idDrink}`, {
+          delay: 0.5,
+          zIndex: newIndex,
+        });
+        gsap.to(`#card${props.drink.idDrink}`, {
+          x: "0",
+          y: "0",
+          delay: 1,
+        });
       },
     });
-  }, []);
+  }, [zIndex]);
 
   const getIngredients = () => {
     const newIngredients = [];
@@ -55,32 +72,46 @@ function Card(props: ICardProps) {
 
   const handleInstruction = () => {
     if (toggle) {
-      gsap.to(".cocktailName", { duration: 2, text: props.drink.strDrink });
-      gsap.to(".instructions", {
+      gsap.to(`#name${props.drink.idDrink}`, {
+        duration: 2,
+        text: props.drink.strDrink,
+      });
+      gsap.to(`#instructions${props.drink.idDrink}`, {
         autoAlpha: 0,
         onComplete: function () {
-          gsap.to(".instructions", { display: "none" });
+          gsap.to(`#instructions${props.drink.idDrink}`, { display: "none" });
         },
       });
-      gsap.to(".ingredients", { delay: 1, display: "initial", autoAlpha: 1 });
-      gsap.to(".measures", { delay: 1, display: "initial", autoAlpha: 1 });
+      gsap.to(`#ingredients${props.drink.idDrink}`, {
+        delay: 1,
+        display: "initial",
+        autoAlpha: 1,
+      });
+      gsap.to(`#measures${props.drink.idDrink}`, {
+        delay: 1,
+        display: "initial",
+        autoAlpha: 1,
+      });
     } else {
-      gsap.to(".cocktailName", { duration: 2, text: "Instructions" });
-      gsap.to(".ingredients", {
+      gsap.to(`#name${props.drink.idDrink}`, {
+        duration: 2,
+        text: "Instructions",
+      });
+      gsap.to(`#ingredients${props.drink.idDrink}`, {
         duration: 1,
         autoAlpha: 0,
         onComplete: function () {
-          gsap.to(".ingredients", { display: "none" });
+          gsap.to(`#ingredients${props.drink.idDrink}`, { display: "none" });
         },
       });
-      gsap.to(".measures", {
+      gsap.to(`#measures${props.drink.idDrink}`, {
         duration: 1,
         autoAlpha: 0,
         onComplete: function () {
-          gsap.to(".measures", { display: "none" });
+          gsap.to(`#measures${props.drink.idDrink}`, { display: "none" });
         },
       });
-      gsap.to(".instructions", {
+      gsap.to(`#instructions${props.drink.idDrink}`, {
         delay: 2,
         display: "initial",
         autoAlpha: 1,
@@ -105,25 +136,38 @@ function Card(props: ICardProps) {
           />
         </div>
         <div id="mainDescriptionContainer">
-          <div className="cocktailName">{props.drink.strDrink}</div>
+          <div className="cocktailName" id={`name${props.drink.idDrink}`}>
+            {props.drink.strDrink}
+          </div>
           <div className="ingredientsContainer">
-            <div className="ingredients">
+            <div
+              className="ingredients"
+              id={`ingredients${props.drink.idDrink}`}
+            >
               {ingredients.length !== 0 &&
                 ingredients.map((ingredient, index) => (
                   <div key={`${ingredient}(${index})`}>{ingredient}</div>
                 ))}
             </div>
-            <div className="measures">
+            <div className="measures" id={`measures${props.drink.idDrink}`}>
               {measures.length !== 0 &&
                 measures.map((measure, index) => (
                   <div key={`${measure}(${index})`}>{measure}</div>
                 ))}
             </div>
-            <div className="instructions"></div>
+            <div
+              className="instructions"
+              id={`instructions${props.drink.idDrink}`}
+            ></div>
           </div>
 
           {window.innerWidth > 480 ? (
-            <div className="instructions">{props.drink.strInstructions}</div>
+            <div
+              className="instructions"
+              id={`instructions${props.drink.idDrink}`}
+            >
+              {props.drink.strInstructions}
+            </div>
           ) : (
             <div className="instructionBtn">
               <button onClick={handleInstruction}>
