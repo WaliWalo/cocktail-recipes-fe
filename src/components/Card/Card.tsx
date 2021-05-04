@@ -6,6 +6,7 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { Draggable } from "gsap/Draggable";
 import { useAppSelector } from "./../../store/setup/store";
+import { Table } from "react-bootstrap";
 
 function Card(props: ICardProps) {
   const [ingredients, setIngredients] = useState<Array<string>>([]);
@@ -18,13 +19,28 @@ function Card(props: ICardProps) {
   gsap.registerPlugin(TextPlugin);
   gsap.registerPlugin(Draggable);
 
+  const directions = [
+    { x: "100vh" },
+    { x: "-100vh" },
+    { y: "100vw" },
+    { y: "-100vw" },
+  ];
+
+  const randomDirection = directions[Math.floor(Math.random() * 3)];
+
   useEffect(() => {
-    gsap.to(`#card${props.drink.idDrink}`, { rotate: props.index - 1000 });
-  });
+    const rotation = props.index - 1000 > 6 ? 0 : props.index - 1000;
+    gsap.fromTo(`#card${props.drink.idDrink}`, randomDirection, {
+      x: 0,
+      y: 0,
+      rotate: rotation,
+    });
+  }, []);
 
   useEffect(() => {
     getIngredients();
     const dragInstance = Draggable.create(`#card${props.drink.idDrink}`, {
+      dragClickables: false,
       onDragEnd: () => {
         const newIndex = zIndex - drinks.length;
         setZIndex(newIndex);
@@ -49,7 +65,7 @@ function Card(props: ICardProps) {
         });
       },
     });
-  }, [zIndex]);
+  }, [zIndex, drinks]);
 
   const getIngredients = () => {
     const newIngredients = [];
@@ -140,25 +156,27 @@ function Card(props: ICardProps) {
             {props.drink.strDrink}
           </div>
           <div className="ingredientsContainer">
-            <div
-              className="ingredients"
-              id={`ingredients${props.drink.idDrink}`}
-            >
-              {ingredients.length !== 0 &&
-                ingredients.map((ingredient, index) => (
-                  <div key={`${ingredient}(${index})`}>{ingredient}</div>
-                ))}
-            </div>
-            <div className="measures" id={`measures${props.drink.idDrink}`}>
-              {measures.length !== 0 &&
-                measures.map((measure, index) => (
-                  <div key={`${measure}(${index})`}>{measure}</div>
-                ))}
-            </div>
-            <div
-              className="instructions"
-              id={`instructions${props.drink.idDrink}`}
-            ></div>
+            <Table striped borderless>
+              <tbody>
+                {ingredients.length !== 0 &&
+                  ingredients.map((ingredient, index) => (
+                    <tr
+                      key={`${ingredient}(${index})`}
+                      id={`ingredients${props.drink.idDrink}`}
+                    >
+                      <td>{ingredient}</td>
+                      <td>{measures.length !== 0 && measures[index]}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+
+            {window.innerWidth < 480 && (
+              <div
+                className="instructions mobileInstructions"
+                id={`instructions${props.drink.idDrink}`}
+              ></div>
+            )}
           </div>
 
           {window.innerWidth > 480 ? (
@@ -169,7 +187,7 @@ function Card(props: ICardProps) {
               {props.drink.strInstructions}
             </div>
           ) : (
-            <div className="instructionBtn">
+            <div className="instructionBtn" data-clickable="true">
               <button onClick={handleInstruction}>
                 {toggle ? "Ingredients" : "Instructions"}
               </button>

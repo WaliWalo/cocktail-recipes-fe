@@ -7,10 +7,7 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import Glasses from "./components/Glasses/Glasses";
 import { Container, Row } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "./store/setup/store";
-import {
-  getRandomRecipesAsync,
-  getSearchedRecipesAsync,
-} from "./store/recipe/recipeSlice";
+import { getRandomRecipesAsync } from "./store/recipe/recipeSlice";
 import { IDrink } from "./components/Card/Types";
 
 function App() {
@@ -18,9 +15,7 @@ function App() {
   const drinks = useAppSelector((state) => state.recipe.data);
 
   useEffect(() => {
-    const query = { type: "glass", query: "cocktail_glass" };
     dispatch(getRandomRecipesAsync());
-    // dispatch(getSearchedRecipesAsync(query));
   }, []);
 
   return (
@@ -35,6 +30,7 @@ function App() {
         </Row>
         <Row>
           {drinks !== undefined &&
+            drinks.length > 0 &&
             drinks.map((drink: IDrink, index: number) => (
               <Card drink={drink} index={index + 1000} key={drinks.idDrink} />
             ))}

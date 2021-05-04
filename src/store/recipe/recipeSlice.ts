@@ -46,17 +46,17 @@ export const getSearchedRecipesAsync = (query: IQuery) => async (
 ) => {
   try {
     let url = "";
-    if (query.type === "cocktail") {
+    if (query.type === "Cocktail") {
       url = `${process.env.REACT_APP_BE_URL}/api/cocktails/search/${query.query}`;
-    } else if (query.type === "ingredient") {
+    } else if (query.type === "Ingredient") {
       url = `${process.env.REACT_APP_BE_URL}/api/cocktails/filter?i=${query.query}`;
     } else {
       url = `${process.env.REACT_APP_BE_URL}/api/cocktails/filter?g=${query.query}`;
     }
     const response = await fetch(url);
     if (response.ok) {
-      // const data = await response.json();
-      dispatch(setRecipes(await response.json()));
+      const data = await response.json();
+      dispatch(setRecipes(data.drinks));
     } else {
       const error = { status: response.status, message: response.statusText };
       dispatch(setError(error));

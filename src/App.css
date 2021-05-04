@@ -9,5 +9,11 @@
 }
 
 .appContainer .row:last-child {
-  margin-top: 2em;
+  margin-top: 0.5em;
+}
+
+@media screen and (min-width: 480px) {
+  .appContainer .row:last-child {
+    margin-top: 2em;
+  }
 }
