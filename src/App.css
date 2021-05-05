@@ -12,6 +12,11 @@
   margin-top: 0.5em;
 }
 
+.contentContainer {
+  height: 70vh;
+  overflow-y: auto;
+}
+
 @media screen and (min-width: 480px) {
   .appContainer .row:last-child {
     margin-top: 2em;

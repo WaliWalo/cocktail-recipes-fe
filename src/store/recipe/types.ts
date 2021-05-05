@@ -56,3 +56,9 @@ export interface IQuery {
   query: string;
   type: string;
 }
+
+export interface ISearchResult {
+  strDrink: string;
+  strDrinkThumb: string;
+  idDrink: string;
+}

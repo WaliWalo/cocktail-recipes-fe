@@ -69,7 +69,7 @@ function Glasses() {
       <Row id="glassesContainer">
         <div
           className="glasses"
-          id="highball"
+          id="highball_glass"
           onClick={(e) => handleGlasses(e)}
         >
           <img
@@ -91,7 +91,7 @@ function Glasses() {
         </div>
         <div
           className="glasses"
-          id="oldFashioned"
+          id="whiskey_sour_glass"
           onClick={(e) => handleGlasses(e)}
         >
           <img
@@ -102,7 +102,7 @@ function Glasses() {
         </div>
         <div
           className="glasses"
-          id="champagne"
+          id="champagne_flute"
           onClick={(e) => handleGlasses(e)}
         >
           <img
@@ -120,7 +120,7 @@ function Glasses() {
         </div>
         <div
           className="glasses"
-          id="punchBowl"
+          id="punch_bowl"
           onClick={(e) => handleGlasses(e)}
         >
           <img src={PunchBowl} alt="punchBowl-icon" className="punchBowlIcon" />
