@@ -8,6 +8,10 @@
   padding-top: 0.5em;
 }
 
+.appContainer .row:first-child {
+  justify-content: space-around;
+}
+
 .appContainer .row:last-child {
   margin-top: 0.5em;
 }
