@@ -7,6 +7,7 @@ import { Heart, HeartFill } from "react-bootstrap-icons";
 import { Draggable } from "gsap/Draggable";
 import { useAppSelector } from "./../../store/setup/store";
 import { Table } from "react-bootstrap";
+import LoginModal from "../Auth/LoginModal";
 
 function Card(props: ICardProps) {
   const [ingredients, setIngredients] = useState<Array<string>>([]);
@@ -15,6 +16,11 @@ function Card(props: ICardProps) {
   const [toggle, setToggle] = useState(false);
   const [zIndex, setZIndex] = useState(props.index);
   const drinks = useAppSelector((state) => state.recipe.data);
+  const [show, setShow] = useState(false);
+
+  const handleModal = () => {
+    setShow(!show);
+  };
 
   gsap.registerPlugin(TextPlugin);
   gsap.registerPlugin(Draggable);
@@ -140,10 +146,13 @@ function Card(props: ICardProps) {
   return (
     <>
       <div className="cardContainer" id={`card${props.drink.idDrink}`}>
-        <div id="topRightIconContainer">
-          {/* <Icon icon={glassCocktail} /> */}
-          {/* <Heart /> */}
-          <HeartFill />
+        <div
+          id="topRightIconContainer"
+          data-clickable="true"
+          onClick={handleModal}
+        >
+          <Heart />
+          {/* <HeartFill /> */}
         </div>
         <div id="cardImageContainer">
           <img
@@ -195,6 +204,7 @@ function Card(props: ICardProps) {
           )}
         </div>
       </div>
+      <LoginModal show={show} handleModal={handleModal} />
     </>
   );
 }

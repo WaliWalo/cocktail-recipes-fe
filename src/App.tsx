@@ -5,12 +5,11 @@ import Overlay from "./components/Overlay/Overlay";
 import Card from "./components/Card/Card";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Glasses from "./components/Glasses/Glasses";
-import { Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "./store/setup/store";
 import { getRandomRecipesAsync } from "./store/recipe/recipeSlice";
 import { IDrink } from "./components/Card/Types";
 import Lists from "./components/Lists/Lists";
-import Login from "./components/Auth/Login";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -23,12 +22,9 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Overlay type="landing" /> */}
       <Container className="appContainer">
         <Row>
-          <div></div>
           <SearchBar />
-          <Login />
         </Row>
         <Row>
           <Glasses />
