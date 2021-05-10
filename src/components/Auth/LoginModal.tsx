@@ -14,10 +14,10 @@ function LoginModal(props: ILoginModalProps) {
         <Modal.Body>
           <Row>
             <Col xs={12} md={6} id="loginDivider">
-              <LoginForm />
+              <LoginForm handleModal={props.handleModal} />
             </Col>
             <Col xs={12} md={6}>
-              <RegisterForm />
+              <RegisterForm handleModal={props.handleModal} />
             </Col>
           </Row>
         </Modal.Body>

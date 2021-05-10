@@ -1,21 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../store/setup/store";
+import { registerUser } from "../../store/user/userSlice";
+import { IRegisterProps } from "./Types";
 
-function RegisterForm() {
+function RegisterForm(props: IRegisterProps) {
+  const dispatch = useAppDispatch();
   const [form, setForm] = useState({
     email: "",
     firstName: "",
     lastName: "",
     password: "",
+    favs: [],
+    _id: "",
   });
+
+  const user = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user.loggedIn) {
+      props.handleModal();
+    }
+  }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.id]: e.currentTarget.value });
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(registerUser(form));
+  };
+
   return (
     <div>
-      <Form>
+      <Form onSubmit={(e) => handleSubmit(e)}>
         <Form.Group controlId="email">
           <Form.Label>Email address</Form.Label>
           <Form.Control

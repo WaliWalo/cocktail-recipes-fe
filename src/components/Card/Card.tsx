@@ -16,9 +16,11 @@ function Card(props: ICardProps) {
   const [toggle, setToggle] = useState(false);
   const [zIndex, setZIndex] = useState(props.index);
   const drinks = useAppSelector((state) => state.recipe.data);
+  const user = useAppSelector((state) => state.user);
   const [show, setShow] = useState(false);
 
   const handleModal = () => {
+    console.log(user);
     setShow(!show);
   };
 
@@ -143,13 +145,15 @@ function Card(props: ICardProps) {
     setToggle(!toggle);
   };
 
+  const handleFav = () => {};
+
   return (
     <>
       <div className="cardContainer" id={`card${props.drink.idDrink}`}>
         <div
           id="topRightIconContainer"
           data-clickable="true"
-          onClick={handleModal}
+          onClick={user.loggedIn ? handleFav : handleModal}
         >
           <Heart />
           {/* <HeartFill /> */}

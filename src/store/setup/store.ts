@@ -6,9 +6,11 @@ import {
   useSelector,
 } from "react-redux";
 import recipeReducer from "../recipe/recipeSlice";
+import userReducer from "../user/userSlice";
 const store = configureStore({
   reducer: {
     recipe: recipeReducer,
+    user: userReducer,
   },
 });
 

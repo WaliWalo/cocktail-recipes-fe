@@ -1,12 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../store/setup/store";
+import { login } from "../../store/user/userSlice";
+import { ILoginProps } from "./Types";
 
-function LoginForm() {
+function LoginForm(props: ILoginProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (user.loggedIn) {
+      props.handleModal();
+    }
+  }, [user]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(login(email, password));
+  };
+
   return (
     <div>
-      <Form>
+      <Form onSubmit={(e) => handleSubmit(e)}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
