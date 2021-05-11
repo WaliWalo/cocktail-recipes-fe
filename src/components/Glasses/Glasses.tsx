@@ -52,6 +52,8 @@ function Glasses() {
           delay: 1,
         });
       });
+    // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [drinks]);
 
   const randomize = () => {
@@ -59,7 +61,6 @@ function Glasses() {
   };
 
   const handleGlasses = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log(e.currentTarget.id);
     const query = { type: "glasses", query: e.currentTarget.id };
     dispatch(getSearchedRecipesAsync(query));
   };

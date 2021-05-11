@@ -5,22 +5,24 @@ import gsap from "gsap/all";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { Draggable } from "gsap/Draggable";
-import { useAppSelector } from "./../../store/setup/store";
+import { useAppDispatch, useAppSelector } from "./../../store/setup/store";
 import { Table } from "react-bootstrap";
 import LoginModal from "../Auth/LoginModal";
+import { addFav, removeFav } from "../../store/user/userSlice";
 
 function Card(props: ICardProps) {
   const [ingredients, setIngredients] = useState<Array<string>>([]);
   const [measures, setMeasures] = useState<Array<string>>([]);
+  // eslint-disable-next-line
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [toggle, setToggle] = useState(false);
   const [zIndex, setZIndex] = useState(props.index);
   const drinks = useAppSelector((state) => state.recipe.data);
   const user = useAppSelector((state) => state.user);
   const [show, setShow] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleModal = () => {
-    console.log(user);
     setShow(!show);
   };
 
@@ -43,6 +45,7 @@ function Card(props: ICardProps) {
       y: 0,
       rotate: rotation,
     });
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -73,6 +76,7 @@ function Card(props: ICardProps) {
         });
       },
     });
+    // eslint-disable-next-line
   }, [zIndex, drinks]);
 
   const getIngredients = () => {
@@ -145,7 +149,11 @@ function Card(props: ICardProps) {
     setToggle(!toggle);
   };
 
-  const handleFav = () => {};
+  const handleFav = () => {
+    user.user.favs.includes(props.drink.idDrink)
+      ? dispatch(removeFav(user.user._id, props.drink.idDrink))
+      : dispatch(addFav(user.user._id, props.drink.idDrink));
+  };
 
   return (
     <>
@@ -155,8 +163,11 @@ function Card(props: ICardProps) {
           data-clickable="true"
           onClick={user.loggedIn ? handleFav : handleModal}
         >
-          <Heart />
-          {/* <HeartFill /> */}
+          {user.loggedIn && user.user.favs.includes(props.drink.idDrink) ? (
+            <HeartFill />
+          ) : (
+            <Heart />
+          )}
         </div>
         <div id="cardImageContainer">
           <img

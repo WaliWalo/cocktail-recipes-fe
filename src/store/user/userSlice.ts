@@ -19,6 +19,8 @@ const userSlice = createSlice({
     setError: (state, action: PayloadAction<string>) =>
       (state = { status: "error", error: action.payload }),
     setLoading: (state) => (state = { status: "loading" }),
+    removeFromFav: (state) => state,
+    unsetUser: (state) => (state = { loggedIn: false }),
   },
 });
 
@@ -40,11 +42,12 @@ export const login = (email: string, password: string) => async (
     );
     if (response.ok) {
       const user = await response.json();
-      if (user.status === "ok") {
-        console.log(user);
-        localStorage.setItem("loggedIn", user.user._id);
+      if (user.status === "Error") {
+        dispatch(setError(user.message));
+      } else {
+        localStorage.setItem("loggedIn", user._id);
+        dispatch(setUser(user));
       }
-      dispatch(setUser(user));
     }
   } catch (error) {
     console.log(error);
@@ -67,11 +70,18 @@ export const registerUser = (credentials: IUser) => async (
     });
     if (response.ok) {
       const user = await response.json();
-      localStorage.setItem("loggedIn", user._id);
-      dispatch(setUser(user));
+      if (user.errors) {
+        dispatch(setError(user.message));
+      } else {
+        localStorage.setItem("loggedIn", user._id);
+        dispatch(setUser(user));
+      }
+    } else {
+      const error = await response.json();
+      dispatch(setError(error.message));
     }
   } catch (error) {
-    console.log(error);
+    console.log("ERROR", error);
     dispatch(setError(error));
   }
 };
@@ -90,12 +100,73 @@ export const getUserById = (userId: string) => async (
     }
   } catch (error) {
     console.log(error);
+    dispatch(setError(error));
+  }
+};
+
+export const addFav = (userId: string, recipeId: string) => async (
+  dispatch: AppDispatch
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_BE_URL}/api/cocktails/favourite/${userId}/${recipeId}`,
+      { method: "PUT", credentials: "include" }
+    );
+    if (response.ok) {
+      dispatch(getUserById(userId));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setError(error));
+  }
+};
+
+export const removeFav = (userId: string, recipeId: string) => async (
+  dispatch: AppDispatch
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_BE_URL}/api/cocktails/favourite/${userId}/${recipeId}`,
+      { method: "DELETE", credentials: "include" }
+    );
+    if (response.ok) {
+      dispatch(getUserById(userId));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setError(error));
+  }
+};
+
+export const logout = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setLoading());
+    const response = await fetch(
+      `${process.env.REACT_APP_BE_URL}/api/auth/logout`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      if (data.status === "ok") {
+        localStorage.clear();
+        dispatch(unsetUser());
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setError(error));
   }
 };
 
 // Extract the action creators object and the reducer
 const { actions, reducer } = userSlice;
 // Extract and export each action creator by name
-export const { setUser, setLoading, setError } = actions;
+export const { setUser, setLoading, setError, unsetUser } = actions;
 
 export default reducer;

@@ -14,6 +14,7 @@ function LoginForm(props: ILoginProps) {
     if (user.loggedIn) {
       props.handleModal();
     }
+    // eslint-disable-next-line
   }, [user]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,6 +31,7 @@ function LoginForm(props: ILoginProps) {
             onChange={(e) => setEmail(e.currentTarget.value)}
             type="email"
             placeholder="Enter email"
+            required
           />
         </Form.Group>
 
@@ -39,6 +41,7 @@ function LoginForm(props: ILoginProps) {
             onChange={(e) => setPassword(e.currentTarget.value)}
             type="password"
             placeholder="Password"
+            required
           />
         </Form.Group>
         <div className="formFooter">

@@ -36,6 +36,7 @@ function Lists() {
             className="listCard"
             id={query.idDrink}
             onClick={(e) => handleDrinkSelect(e)}
+            key={query.idDrink}
           >
             <div className="listCardInner">
               <div className="listImgContainer">

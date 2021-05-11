@@ -44,6 +44,8 @@ function SearchBar() {
           delay: 1,
         });
       });
+    // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [drinks]);
 
   const submitForm = (e: React.SyntheticEvent) => {

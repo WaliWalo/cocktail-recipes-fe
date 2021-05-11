@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../store/setup/store";
 import { registerUser } from "../../store/user/userSlice";
 import { IRegisterProps } from "./Types";
+import { gsap } from "gsap";
 
 function RegisterForm(props: IRegisterProps) {
   const dispatch = useAppDispatch();
@@ -21,7 +22,19 @@ function RegisterForm(props: IRegisterProps) {
     if (user.loggedIn) {
       props.handleModal();
     }
-  }, [user]);
+    if (user.status === "error") {
+      gsap.to("#loginAlert", {
+        autoAlpha: 1,
+        text: user.error,
+        duration: 1,
+        onComplete: function () {
+          gsap.to("#loginAlert", { delay: 3, autoAlpha: 0 });
+        },
+      });
+    }
+    // eslint-disable-next-line
+    // eslint-disable-next-line
+  }, [user, form]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.id]: e.currentTarget.value });
@@ -44,6 +57,7 @@ function RegisterForm(props: IRegisterProps) {
             }
             type="email"
             placeholder="Enter email"
+            required
           />
         </Form.Group>
         <Form.Group controlId="firstName">
@@ -55,6 +69,7 @@ function RegisterForm(props: IRegisterProps) {
             }
             type="text"
             placeholder="First Name"
+            required
           />
         </Form.Group>
         <Form.Group controlId="lastName">
@@ -66,6 +81,7 @@ function RegisterForm(props: IRegisterProps) {
             }
             type="text"
             placeholder="Last Name"
+            required
           />
         </Form.Group>
         <Form.Group controlId="password">
@@ -77,8 +93,10 @@ function RegisterForm(props: IRegisterProps) {
             }
             type="password"
             placeholder="Password"
+            required
           />
         </Form.Group>
+
         <div className="formFooter">
           <Button variant="primary" type="submit">
             Register

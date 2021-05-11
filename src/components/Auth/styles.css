@@ -16,6 +16,12 @@
   border-right: solid;
 }
 
+#loginAlert {
+  position: absolute;
+  bottom: 0;
+  visibility: hidden;
+}
+
 .formFooter {
   display: flex;
   justify-content: center;

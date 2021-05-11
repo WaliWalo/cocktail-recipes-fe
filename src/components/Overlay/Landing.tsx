@@ -7,20 +7,20 @@ function Landing() {
     let vw;
     window.innerWidth > 1440 ? (vw = "70%") : (vw = "60%");
     const tl = gsap.timeline();
-    tl.to("#whiskeyContainer", { duration: 2, left: "40%" });
-    tl.to("#oldFashionedContainer", { duration: 2, right: "37vw" });
+    tl.to("#whiskeyContainer", { duration: 1, left: "40%" });
+    tl.to("#oldFashionedContainer", { duration: 1, right: "37vw" });
     tl.to("#orangePeelContainer", {
-      duration: 2,
+      duration: 1,
       top: vw,
       rotate: 180,
     });
     tl.to(".landingContainers", {
-      duration: 2,
+      duration: 1,
       rotate: 360,
       width: "0%",
       height: "0%",
       onStart: function () {
-        gsap.to("#overlay", { x: "100vw", duration: 2 });
+        gsap.to("#overlay", { x: "100vw", duration: 1 });
       },
       onComplete: function () {
         gsap.to("#overlay", { display: "none" });
