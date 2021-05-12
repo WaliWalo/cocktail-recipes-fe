@@ -45,7 +45,7 @@ function LoginForm(props: ILoginProps) {
           />
         </Form.Group>
         <div className="formFooter">
-          <Button variant="primary" type="submit">
+          <Button variant="dark" type="submit">
             Login
           </Button>
         </div>

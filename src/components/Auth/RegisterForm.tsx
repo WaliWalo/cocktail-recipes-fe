@@ -98,7 +98,7 @@ function RegisterForm(props: IRegisterProps) {
         </Form.Group>
 
         <div className="formFooter">
-          <Button variant="primary" type="submit">
+          <Button variant="dark" type="submit">
             Register
           </Button>
         </div>
