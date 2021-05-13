@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "./store/setup/store";
 import { getRandomRecipesAsync, setRecipes } from "./store/recipe/recipeSlice";
 import { IDrink } from "./components/Card/Types";
 import Lists from "./components/Lists/Lists";
-import { getUserById, logout } from "./store/user/userSlice";
+import { getUserById, logout, loginWithFB } from "./store/user/userSlice";
 import { BoxArrowRight, HeartFill } from "react-bootstrap-icons";
 import { IRecipe } from "./store/recipe/types";
 
@@ -23,6 +23,15 @@ function App() {
     const userId = localStorage.getItem("loggedIn");
     if (userId) {
       dispatch(getUserById(userId));
+    }
+    if (window.location.hash === "#_=_") {
+      window.location.hash = ""; // for older browsers, leaves a # behind
+    }
+    var urlParams = new URLSearchParams(window.location.search);
+    const queryId = urlParams.get("userId");
+    console.log(queryId);
+    if (queryId) {
+      dispatch(loginWithFB(queryId));
     }
     // eslint-disable-next-line
   }, []);

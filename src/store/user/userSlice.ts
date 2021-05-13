@@ -156,7 +156,26 @@ export const logout = () => async (dispatch: AppDispatch) => {
       if (data.status === "ok") {
         localStorage.clear();
         dispatch(unsetUser());
+        window.history.pushState("object or string", "Title", "/");
       }
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setError(error));
+  }
+};
+
+export const loginWithFB = (userId: string) => async (
+  dispatch: AppDispatch
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_BE_URL}/api/users/${userId}`
+    );
+    if (response.ok) {
+      const user = await response.json();
+      localStorage.setItem("loggedIn", user._id);
+      dispatch(setUser(user));
     }
   } catch (error) {
     console.log(error);

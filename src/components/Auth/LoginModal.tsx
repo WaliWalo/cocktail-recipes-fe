@@ -5,8 +5,10 @@ import "./styles.css";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import { useAppSelector } from "../../store/setup/store";
+import { Facebook, Google } from "react-bootstrap-icons";
 function LoginModal(props: ILoginModalProps) {
   const user = useAppSelector((state) => state.user);
+
   return (
     <div>
       <Modal show={props.show} onHide={props.handleModal} size="lg">
@@ -34,7 +36,16 @@ function LoginModal(props: ILoginModalProps) {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <div>Sign up with google</div>
+          <a href={`${process.env.REACT_APP_BE_URL}/api/auth/facebookLogin`}>
+            <div className="socialLogoContainer mr-3">
+              <Facebook />
+            </div>
+          </a>
+          <a href={`${process.env.REACT_APP_BE_URL}/api/auth/googleLogin`}>
+            <div className="socialLogoContainer">
+              <Google />
+            </div>
+          </a>
         </Modal.Footer>
       </Modal>
     </div>
