@@ -8,19 +8,24 @@ import CocktailGlass from "./cocktail.svg";
 import OldFashionedGlass from "./whiskey.svg";
 import ChampagneGlass from "./champagne.svg";
 import Shuffle from "./shuffle.svg";
-import { Container, Row } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import { useAppDispatch } from "../../store/setup/store";
 import {
   getRandomRecipesAsync,
   getSearchedRecipesAsync,
+  setRecipes,
 } from "../../store/recipe/recipeSlice";
 import { useAppSelector } from "./../../store/setup/store";
 import { IDrink } from "../Card/Types";
 import gsap from "gsap/all";
+import { BoxArrowRight, HeartFill } from "react-bootstrap-icons";
+import { logout } from "../../store/user/userSlice";
+import { IRecipe } from "../../store/recipe/types";
 
 function Glasses() {
   const dispatch = useAppDispatch();
   const drinks = useAppSelector((state) => state.recipe.data);
+  const user = useAppSelector((state) => state.user);
 
   const directions = [
     { x: "120vh" },
@@ -63,6 +68,26 @@ function Glasses() {
   const handleGlasses = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const query = { type: "glasses", query: e.currentTarget.id };
     dispatch(getSearchedRecipesAsync(query));
+  };
+
+  const getFavs = () => {
+    let favs: Array<IRecipe> = [];
+    user.user.favs.forEach(async (fav: string) => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BE_URL}/api/cocktails/lookupCocktail/${fav}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          favs = [...favs, data.drinks[0]];
+        } else {
+          console.log(response);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      dispatch(setRecipes(favs));
+    });
   };
 
   return (
@@ -132,6 +157,22 @@ function Glasses() {
         <div className="glasses" id="shuffle" onClick={randomize}>
           <img src={Shuffle} alt="Shuffle-icon" className="ShuffleIcon" />
         </div>
+        {user.loggedIn && (
+          <>
+            <div className="glasses">
+              <button onClick={() => dispatch(logout())} className="ml-2">
+                <BoxArrowRight size={30} color="black" id="logoutIcon" />
+              </button>
+            </div>
+            <div className="glasses">
+              {user.user.favs.length > 0 && (
+                <button onClick={getFavs} className="mt-1">
+                  <HeartFill size={30} color="black" />
+                </button>
+              )}
+            </div>
+          </>
+        )}
       </Row>
     </Container>
   );

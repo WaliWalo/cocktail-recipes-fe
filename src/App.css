@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Righteous&display=swap");
+
 .App {
   background-color: black;
   height: 100vh;
@@ -19,6 +21,14 @@
 .contentContainer {
   height: 70vh;
   overflow-y: auto;
+}
+
+#noResultContainer {
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: 10vw;
+  font-family: "Righteous", cursive;
 }
 
 @media screen and (min-width: 480px) {

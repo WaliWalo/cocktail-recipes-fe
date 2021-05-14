@@ -27,6 +27,7 @@ const recipeSlice = createSlice({
 // The function below is called a thunk and allows us to perform async logic.
 export const getRandomRecipesAsync = () => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setLoading());
     const response = await fetch(
       `${process.env.REACT_APP_BE_URL}/api/cocktails`
     );

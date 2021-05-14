@@ -59,6 +59,7 @@ export const registerUser = (credentials: IUser) => async (
   dispatch: AppDispatch
 ) => {
   try {
+    dispatch(setLoading());
     delete credentials._id;
     const response = await fetch(`${process.env.REACT_APP_BE_URL}/api/users`, {
       method: "POST",
@@ -169,6 +170,7 @@ export const loginWithFB = (userId: string) => async (
   dispatch: AppDispatch
 ) => {
   try {
+    dispatch(setLoading());
     const response = await fetch(
       `${process.env.REACT_APP_BE_URL}/api/users/${userId}`
     );

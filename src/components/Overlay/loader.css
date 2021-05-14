@@ -1,4 +1,127 @@
 #loader {
   height: 100%;
   width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loaderContainer {
+  height: 15em;
+  width: 15em;
+  /* background-color: blue; */
+  position: relative;
+}
+
+.top {
+  position: absolute;
+  width: 4em;
+  height: 0.5em;
+  top: 20%;
+  right: 50%;
+  background-image: radial-gradient(
+    circle,
+    #6bced1,
+    #60c9da,
+    #5cc3e1,
+    #61bce7,
+    #6eb4e9,
+    #6db8ee,
+    #6bbbf3,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+}
+
+#rightTop {
+  left: 50%;
+}
+
+.diag {
+  position: absolute;
+  width: 6em;
+  height: 0.5em;
+  top: 34%;
+  right: 43.5%;
+  background-image: radial-gradient(
+    circle,
+    #6bced1,
+    #60c9da,
+    #5cc3e1,
+    #61bce7,
+    #6eb4e9,
+    #6db8ee,
+    #6bbbf3,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+  transform: rotate(50deg);
+  border-radius: 26%;
+}
+
+#leftDiag {
+  transform-origin: "left top";
+}
+
+#rightDiag {
+  left: 43.5%;
+  transform: rotate(-50deg);
+}
+
+#middle {
+  position: absolute;
+  height: 4em;
+  width: 0.5em;
+  background-image: radial-gradient(
+    circle,
+    #6bced1,
+    #60c9da,
+    #5cc3e1,
+    #61bce7,
+    #6eb4e9,
+    #6db8ee,
+    #6bbbf3,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+  /* bottom: 24%; */
+  top: 50%;
+  right: 48%;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 22%;
+  right: 50%;
+  width: 3em;
+  height: 0.5em;
+  background-image: radial-gradient(
+    circle,
+    #6bced1,
+    #60c9da,
+    #5cc3e1,
+    #61bce7,
+    #6eb4e9,
+    #6db8ee,
+    #6bbbf3,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+}
+
+#bottomRight {
+  left: 50%;
 }

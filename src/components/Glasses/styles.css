@@ -27,6 +27,22 @@
   cursor: pointer;
 }
 
+.glasses > button {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+.glasses > button:hover {
+  border: 0px;
+}
+
+#logoutIcon {
+  stroke: black;
+}
+
 @-webkit-keyframes AnimationName {
   0% {
     background-position: 37% 0%;
