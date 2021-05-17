@@ -179,7 +179,7 @@ function Card(props: ICardProps) {
           <div className="cocktailName" id={`name${props.drink.idDrink}`}>
             {props.drink.strDrink}
           </div>
-          <div className="ingredientsContainer">
+          <div className="ingredientsContainer" data-clickable="true">
             <Table striped borderless>
               <tbody>
                 {ingredients.length !== 0 &&
