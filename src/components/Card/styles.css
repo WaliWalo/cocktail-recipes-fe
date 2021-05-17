@@ -87,8 +87,12 @@
   overflow-y: auto;
   /* text-align: -webkit-center; */
   text-align: start;
-  padding-left: 1em;
+  /* padding-left: 1em; */
   /* margin-top: 1em; */
+}
+
+.ingredientsContainer > table {
+  height: 100%;
 }
 
 .instructions {
