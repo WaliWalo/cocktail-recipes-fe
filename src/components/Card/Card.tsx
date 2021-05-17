@@ -60,11 +60,12 @@ function Card(props: ICardProps) {
           gsap.to(`#card${props.drink.idDrink}`, { x: "100vw" });
         } else if (direction === "left" || direction.slice(0, 4) === "left") {
           gsap.to(`#card${props.drink.idDrink}`, { x: "-100vw" });
-        } else if (direction === "up") {
-          gsap.to(`#card${props.drink.idDrink}`, { y: "-100vh" });
-        } else if (direction === "down") {
-          gsap.to(`#card${props.drink.idDrink}`, { y: "100vh" });
         }
+        // else if (direction === "up") {
+        //   gsap.to(`#card${props.drink.idDrink}`, { y: "-100vh" });
+        // } else if (direction === "down") {
+        //   gsap.to(`#card${props.drink.idDrink}`, { y: "100vh" });
+        // }
         gsap.to(`#card${props.drink.idDrink}`, {
           delay: 0.5,
           zIndex: newIndex,
@@ -179,7 +180,7 @@ function Card(props: ICardProps) {
           <div className="cocktailName" id={`name${props.drink.idDrink}`}>
             {props.drink.strDrink}
           </div>
-          <div className="ingredientsContainer" data-clickable="true">
+          <div className="ingredientsContainer">
             <Table striped borderless>
               <tbody>
                 {ingredients.length !== 0 &&
