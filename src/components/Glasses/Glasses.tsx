@@ -8,7 +8,7 @@ import CocktailGlass from "./cocktail.svg";
 import OldFashionedGlass from "./whiskey.svg";
 import ChampagneGlass from "./champagne.svg";
 import Shuffle from "./shuffle.svg";
-import { Button, Container, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import { useAppDispatch } from "../../store/setup/store";
 import {
   getRandomRecipesAsync,

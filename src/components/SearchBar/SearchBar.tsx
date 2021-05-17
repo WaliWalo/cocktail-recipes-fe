@@ -52,6 +52,7 @@ function SearchBar() {
     e.preventDefault();
     const value = { query: query, type: type };
     dispatch(getSearchedRecipesAsync(value));
+    setQuery("");
   };
 
   return (
@@ -63,6 +64,7 @@ function SearchBar() {
             aria-label="Search"
             aria-describedby="Search"
             onChange={(e) => setQuery(e.target.value)}
+            value={query}
           />
           <InputGroup.Prepend>
             <Form.Control as="select" onChange={(e) => setType(e.target.value)}>
