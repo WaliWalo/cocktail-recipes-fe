@@ -50,6 +50,9 @@ function Card(props: ICardProps) {
 
   useEffect(() => {
     getIngredients();
+    Draggable.create(`#ingredientTable${props.drink.idDrink}`, {
+      bounds: ".ingredientsContainer",
+    });
     const dragInstance = Draggable.create(`#card${props.drink.idDrink}`, {
       dragClickables: false,
       onDragEnd: () => {
@@ -181,7 +184,11 @@ function Card(props: ICardProps) {
             {props.drink.strDrink}
           </div>
           <div className="ingredientsContainer" data-clickable="true">
-            <Table striped borderless>
+            <Table
+              striped
+              borderless
+              id={`ingredientTable${props.drink.idDrink}`}
+            >
               <tbody>
                 {ingredients.length !== 0 &&
                   ingredients.map((ingredient, index) => (
